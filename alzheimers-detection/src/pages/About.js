@@ -8,9 +8,9 @@ const About = () => (
     </p>
     <h2>Our Team</h2>
     <ul>
-      <li>Team Member 1: Role</li>
-      <li>Team Member 2: Role</li>
-      <li>Team Member 3: Role</li>
+      <li>Rohan Sharma: AI Engineer</li>
+      <li>Sahil Alamgir: Data Analyst and Web Developer</li>
+      <li>Akram Jamil: Marketing and App Developer</li>
     </ul>
   </div>
 );
