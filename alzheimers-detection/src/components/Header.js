@@ -2,11 +2,20 @@ import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import logo from '../assets/images/logo.png';
+import './Header.css';
 
 const Header = () => (
   <Navbar bg="light" expand="lg">
     <Container className="ml-3">
-      <Navbar.Brand as={Link} to="/">AlzGuard</Navbar.Brand>
+      <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
+        <img
+          src={logo}
+          className="navbar-logo"
+          alt="AlzGuard logo"
+        />
+        AlzGuard
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <div>
         <Navbar.Collapse className="basic-navbar-nav">

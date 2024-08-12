@@ -1,6 +1,11 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import os
+import sys, os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+# Import necessary functions and models
+# from model2 import predict_alzheimers  # Import the predict_alzheimers function
 
 app = Flask(__name__)
 CORS(app)
@@ -12,26 +17,32 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    ethnicity = request.form["ethnicity"]
-    diabetes = request.form["diabetes"]
-    cholesterol_HDL = request.form["cholesterol_HDL"]
-    MMSE = request.form["MMSE"]
-    functional_assessment = request.form["functional_assessment"]
-    memory_complaints = request.form["memory_complaints"]
-    behavioral_problems = request.form["behavioral_problems"]
-    ADL = request.form["ADL"]
+    # Collect clinical data from the form
+    user_input = {
+        "Ethnicity": int(request.form["ethnicity"]),
+        "Diabetes": int(request.form["diabetes"]),
+        "CholesterolHDL": float(request.form["cholesterol_HDL"]),
+        "MMSE": int(request.form["MMSE"]),
+        "FunctionalAssessment": int(request.form["functional_assessment"]),
+        "MemoryComplaints": int(request.form["memory_complaints"]),
+        "BehavioralProblems": int(request.form["behavioral_problems"]),
+        "ADL": int(request.form["ADL"]),
+    }
+
+    # Get the MRI image from the form
     file = request.files["mri_image"]
 
     if file:
         file_path = os.path.join(UPLOAD_FOLDER, file.filename)
         file.save(file_path)
 
-        # Here you would call your AI model with the clinical info and file path
-        # For example:
-        # result = your_ai_model(education_level, sleep_quality, cholesterol_HDL, MMSE, functional_assessment, memory_complaints, behavioral_problems, ADL, file_path)
+        # Call the AI model to get the prediction and confidence score
+        # prediction, confidence = predict_alzheimers(user_input, file_path)
 
-        # Placeholder response
-        result = {"prediction": "positive", "confidence": 0.85}
+        result = {
+            "prediction": "positive",
+            "confidence": 0.75,
+        }
 
         return jsonify(result)
     else:

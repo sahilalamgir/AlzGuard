@@ -1,15 +1,15 @@
-.full-page {
+/* .full-page {
   background-color: rgb(67, 171, 255);
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   color: white;
-}
+} */
 
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 .App-logo {
   height: 40vmin;
@@ -44,4 +44,40 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/*  */
+
+/* body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f8ff;
+} */
+
+/* .full-page {
+  background-color: rgb(67, 171, 255);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+} */
+
+h1, h3 {
+  font-weight: bold;
+  color: #343a40;
+}
+
+p {
+  color: #5a5a5a;
+}
+
+a {
+  color: #0099ff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0056b3;
+  text-decoration: underline;
 }

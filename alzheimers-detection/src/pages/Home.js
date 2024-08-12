@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
 
 const Home = () => {
@@ -54,17 +53,17 @@ const Home = () => {
   return (
     <div className="home">
       <Container>
-        <Row className="hero">
-          <Col className='my-3'>
-            <h1>Welcome to Alzheimer's Detection</h1>
-            <p>Early detection of Alzheimer's using AI and MRI scans.</p>
+        <Row className="hero mb-4 text-center">
+          <Col className='my-4'>
+            <h1>Alzheimer's Detection</h1>
+            <p>Utilizing AI to detect Alzheimer's early through MRI scans.</p>
           </Col>
         </Row>
         <Row className="form-section">
-          <Col md={6}>
+          <Col md={6} className="form-col">
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="ethnicity">
-                <Form.Label>Enter Ethnicity</Form.Label>
+                <Form.Label>Ethnicity</Form.Label>
                 <Form.Control 
                   as="select" 
                   value={ethnicity} 
@@ -78,82 +77,76 @@ const Home = () => {
                 </Form.Control>
               </Form.Group>
               <Form.Group className="mb-3" controlId="diabetes">
-                <Form.Label>Enter Diabetes</Form.Label>
+                <Form.Label>Diabetes</Form.Label>
                 <Form.Control 
                   as="select" 
                   value={diabetes} 
                   onChange={(e) => setDiabetes(e.target.value)}
                 >
-                  <option value="">Select Diabetes</option>
-                  <option value="0">No, I do not have Diabetes</option>
-                  <option value="1">Yes, I do have Diabetes</option>
+                  <option value="">Select Diabetes Status</option>
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
                 </Form.Control>
               </Form.Group>
               <Form.Group className="mb-3" controlId="cholesterolHDL">
-                <Form.Label>Enter Cholesterol HDL</Form.Label>
+                <Form.Label>Cholesterol HDL</Form.Label>
                 <Form.Control 
-                  as="textarea" 
-                  rows={1} 
-                  placeholder="Enter cholesterol HDL here" 
+                  type="number" 
+                  placeholder="Enter cholesterol HDL" 
                   value={cholesterolHDL}
                   onChange={(e) => setCholesterolHDL(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="MMSE">
-                <Form.Label>Enter MMSE</Form.Label>
+                <Form.Label>MMSE</Form.Label>
                 <Form.Control 
-                  as="textarea" 
-                  rows={1} 
-                  placeholder="Enter MMSE here" 
+                  type="number" 
+                  placeholder="Enter MMSE score" 
                   value={MMSE}
                   onChange={(e) => setMMSE(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="functionalAssessment">
-                <Form.Label>Enter Functional Assessment</Form.Label>
+                <Form.Label>Functional Assessment</Form.Label>
                 <Form.Control 
-                  as="textarea" 
-                  rows={1} 
-                  placeholder="Enter functional assessment here" 
+                  type="text" 
+                  placeholder="Enter functional assessment" 
                   value={functionalAssessment}
                   onChange={(e) => setFunctionalAssessment(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="memoryComplaints">
-                <Form.Label>Enter Memory Complaints</Form.Label>
+                <Form.Label>Memory Complaints</Form.Label>
                 <Form.Control 
-                  as="textarea" 
-                  rows={1} 
-                  placeholder="Enter memory complaints here" 
+                  type="text" 
+                  placeholder="Enter memory complaints" 
                   value={memoryComplaints}
                   onChange={(e) => setMemoryComplaints(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="behavioralProblems">
-                <Form.Label>Enter Behavioral Problems</Form.Label>
+                <Form.Label>Behavioral Problems</Form.Label>
                 <Form.Control 
-                  as="textarea" 
-                  rows={1} 
-                  placeholder="Enter behavioral problems here" 
+                  type="text" 
+                  placeholder="Enter behavioral problems" 
                   value={behavioralProblems}
                   onChange={(e) => setBehavioralProblems(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="ADL">
-                <Form.Label>Enter ADL</Form.Label>
+                <Form.Label>ADL</Form.Label>
                 <Form.Control 
-                  as="textarea" 
-                  rows={1} 
-                  placeholder="Enter ADL here" 
+                  type="text" 
+                  placeholder="Enter ADL" 
                   value={ADL}
                   onChange={(e) => setADL(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-4" controlId="mriUpload">
-                <Form.Label>Upload MRI Scan</Form.Label>
+                <Form.Label>MRI Scan Upload</Form.Label>
                 <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
               </Form.Group>
-              <Button className="mb-4" variant="outline-light" type="submit">
+              <Button variant="primary" type="submit" className="w-100 mt-2">
                 Get Results
               </Button>
             </Form>
@@ -165,7 +158,7 @@ const Home = () => {
           </Col>
         </Row>
         {result && (
-          <Row className="result-section">
+          <Row className="result-section mt-4 text-center">
             <Col>
               <h3>Prediction Result</h3>
               <p>Prediction: {result.prediction}</p>
