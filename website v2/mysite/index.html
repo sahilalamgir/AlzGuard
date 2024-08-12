@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alzheimer's Detection</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+</head>
+
+<body>
+    <div class="home">
+        <div class="container">
+            <div class="row hero">
+                <div class="col my-3">
+                    <h1>Welcome to Alzheimer's Detection</h1>
+                    <p>Early detection of Alzheimer's using AI and MRI scans.</p>
+                </div>
+            </div>
+            <div class="row form-section">
+                <div class="col-md-6">
+                    <form id="alzheimerForm">
+                        <div class="form-group mb-3">
+                            <label for="ethnicity">Enter Ethnicity</label>
+                            <select class="form-control" id="ethnicity" name="ethnicity">
+                                <option value="">Select Ethnicity</option>
+                                <option value="0">Caucasian</option>
+                                <option value="1">African American</option>
+                                <option value="2">Asian</option>
+                                <option value="3">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="diabetes">Enter Diabetes</label>
+                            <select class="form-control" id="diabetes" name="diabetes">
+                                <option value="">Select Diabetes</option>
+                                <option value="0">No, I do not have Diabetes</option>
+                                <option value="1">Yes, I do have Diabetes</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="cholesterolHDL">Enter Cholesterol HDL</label>
+                            <textarea class="form-control" rows="1" id="cholesterolHDL" name="cholesterolHDL"
+                                placeholder="Enter cholesterol HDL here"></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="MMSE">Enter MMSE</label>
+                            <textarea class="form-control" rows="1" id="MMSE" name="MMSE"
+                                placeholder="Enter MMSE here"></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="functionalAssessment">Enter Functional Assessment</label>
+                            <textarea class="form-control" rows="1" id="functionalAssessment" name="functionalAssessment"
+                                placeholder="Enter functional assessment here"></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="memoryComplaints">Enter Memory Complaints</label>
+                            <textarea class="form-control" rows="1" id="memoryComplaints" name="memoryComplaints"
+                                placeholder="Enter memory complaints here"></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="behavioralProblems">Enter Behavioral Problems</label>
+                            <textarea class="form-control" rows="1" id="behavioralProblems" name="behavioralProblems"
+                                placeholder="Enter behavioral problems here"></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="ADL">Enter ADL</label>
+                            <textarea class="form-control" rows="1" id="ADL" name="ADL"
+                                placeholder="Enter ADL here"></textarea>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="mriUpload">Upload MRI Scan</label>
+                            <input type="file" class="form-control-file" id="mriUpload" accept="image/*"
+                                onchange="handleImageChange(event)">
+                        </div>
+                        <button type="submit" class="btn btn-outline-light mb-4">Get Results</button>
+                    </form>
+                </div>
+                <div class="col-md-6 img-col">
+                    <div class="img-wrapper">
+                        <img id="mriImage" class="img-place" src="" alt="Your image will appear here" />
+                    </div>
+                </div>
+            </div>
+            <div class="row result-section" id="resultSection" style="display: none;">
+                <div class="col">
+                    <h3>Prediction Result</h3>
+                    <p id="prediction"></p>
+                    <p id="confidence"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let imageFile;
+
+        function handleImageChange(e) {
+            if (e.target.files && e.target.files[0]) {
+                const imageUrl = URL.createObjectURL(e.target.files[0]);
+                document.getElementById('mriImage').src = imageUrl;
+                imageFile = e.target.files[0];
+            }
+        }
+
+        document.getElementById('alzheimerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append('ethnicity', document.getElementById('ethnicity').value);
+            formData.append('diabetes', document.getElementById('diabetes').value);
+            formData.append('cholesterol_HDL', document.getElementById('cholesterolHDL').value);
+            formData.append('MMSE', document.getElementById('MMSE').value);
+            formData.append('functional_assessment', document.getElementById('functionalAssessment').value);
+            formData.append('memory_complaints', document.getElementById('memoryComplaints').value);
+            formData.append('behavioral_problems', document.getElementById('behavioralProblems').value);
+            formData.append('ADL', document.getElementById('ADL').value);
+            formData.append('mri_image', imageFile);
+
+            fetch('http://localhost:5000/predict', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('resultSection').style.display = 'block';
+                    document.getElementById('prediction').textContent = `Prediction: ${data.prediction}`;
+                    document.getElementById('confidence').textContent = `Confidence: ${data.confidence}`;
+                })
+                .catch(error => console.error('There was an error!', error));
+        });
+    </script>
+</body>
+
+</html>
